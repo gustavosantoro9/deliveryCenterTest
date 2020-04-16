@@ -4,17 +4,21 @@ require 'json'
 require 'date'
 
 require_relative 'model.rb'
+require_relative 'db.rb'
 
 class DeliveryCenter
     include HTTParty
     base_uri "https://delivery-center-recruitment-ap.herokuapp.com/" 
     model = Model.new
-    
+
     if $paid == "paid"
         time = Time.now.strftime("%Hh%M - %d/%m/%Y")
-        response = HTTParty.post(base_uri, body: $body)
+        headers = {
+            "x-sent" => time
+        }
+        response = HTTParty.post(base_uri, body: $body, headers => headers)
         if response.code == 200
-            p "salvando no banco de dados"
+            db = DB.new($body)
         end
     else
         p "pagamento não efetuado"
