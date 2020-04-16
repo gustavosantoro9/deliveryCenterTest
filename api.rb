@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rubygems'
 require 'httparty'
 require 'json'
@@ -7,23 +9,21 @@ require_relative 'model.rb'
 require_relative 'db.rb'
 
 class DeliveryCenter
-    include HTTParty
-    base_uri "https://delivery-center-recruitment-ap.herokuapp.com/" 
-    model = Model.new
+  include HTTParty
+  base_uri 'https://delivery-center-recruitment-ap.herokuapp.com/'
+  model = Model.new
 
-    if $paid == "paid"
-        time = Time.now.strftime("%Hh%M - %d/%m/%Y")
-        headers = {
-            "x-sent" => time
-        }
-        response = HTTParty.post(base_uri, body: $body, headers => headers)
-        if response.code == 200
-            db = DB.new($body)
-        end
-    else
-        p "pagamento não efetuado"
-    end    
-end
+  if $paid == 'paid'
+    time = Time.now.strftime('%Hh%M - %d/%m/%Y')
 
+    headers = {
+      'x-sent' => time
+    }
 
+    response = HTTParty.post(base_uri, body: $body, headers => headers)
     
+    db = DB.new($body) if response.code == 200
+  else
+    p 'pagamento não efetuado'
+  end
+end
