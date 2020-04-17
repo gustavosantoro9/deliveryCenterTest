@@ -4,6 +4,11 @@ require 'json'
 
 class ParseShipping
   file = File.read('payload.json')
+
+  def fileExtension
+    File.extname('payload.json')
+  end
+
   data_hash = JSON.parse(file)
 
   $paid = data_hash['payments'][0]['status']

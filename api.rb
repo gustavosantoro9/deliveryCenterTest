@@ -20,10 +20,15 @@ class DeliveryCenter
       'x-sent' => time
     }
 
-    response = HTTParty.post(base_uri, body: $body, headers => headers)
+    $response = HTTParty.post(base_uri, body: $body, headers => headers)
     
-    db = DB.new($body) if response.code == 200
+    db = DB.new($body) if $response.code == 200
   else
     p 'pagamento não efetuado'
   end
+
+  def code
+    $response.code
+  end
+
 end
