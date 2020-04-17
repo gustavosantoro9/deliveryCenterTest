@@ -2,7 +2,7 @@
 
 require 'json'
 
-class ParseShipping
+class Parse
   file = File.read('payload.json')
 
   def fileExtension

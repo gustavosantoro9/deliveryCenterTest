@@ -8,6 +8,7 @@ class DB
   end
 
   obj = JSON[$body]
+  $code = 0
 
   begin
     con = PG.connect dbname: 'deliverycenter', user: 'postgres'
@@ -16,11 +17,16 @@ class DB
 
     con.transaction do |con|
       con.exec @query
-      p 'adicionado com sucesso ao banco de dados'
+      $code = 1
     end
   rescue PG::Error => e
     puts e.message
   ensure
     con&.close
   end
+
+  def answer
+    $code
+  end
+  
 end

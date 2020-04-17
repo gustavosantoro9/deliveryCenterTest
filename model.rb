@@ -3,8 +3,8 @@
 require_relative 'parsing.rb'
 
 class Model
-  parsing = ParseShipping.new
-
+  parsing = Parse.new
+  
   $body = {
     externalCode: $exCode,
     storeId: $storeId,
